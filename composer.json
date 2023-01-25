@@ -1,0 +1,14 @@
+{
+    "name": "codificar/card-validation",
+    "description": "A generic library for laravel.",
+    "authors": [{
+        "name": "Codificar",
+        "email": "libs@codificar.com.br"
+    }],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Codificar\\CardValidation\\": "src/"
+        }
+    }
+}
