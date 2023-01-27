@@ -3,11 +3,11 @@
 
 // Rotas do painel 
 
-Route::group(array('namespace' => 'Codificar\Generic\Http\Controllers'), function () {
+Route::group(array('namespace' => 'Codificar\CardValidation\Http\Controllers'), function () {
     
-    // (View painel admin)
-    Route::group(['prefix' => 'admin/libs', 'middleware' => 'auth.admin'], function () {
-        Route::get('/example_vuejs', array('as' => 'webAdminGeneric', 'uses' => 'GenericController@getExampleVuejs'));
+    //Rota de add cartão via painel
+    Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
+        Route::post('/user/libs/finance/payment/add_credit_card', array('as' => 'userAddCreditCardPanel', 'uses' => 'FinanceController@addCreditCard'));
     });
 
 });

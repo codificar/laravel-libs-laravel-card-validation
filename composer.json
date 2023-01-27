@@ -2,13 +2,35 @@
     "name": "codificar/card-validation",
     "description": "A generic library for laravel.",
     "authors": [{
-        "name": "Codificar",
-        "email": "libs@codificar.com.br"
+        "name": "Gustavo Ferreira",
+        "email": "gustavo.ferreira@codificar.com.br"
     }],
-    "require": {},
+    "require": {
+        "laravel-validation-rules/credit-card": "^1.7.0"
+    },
     "autoload": {
         "psr-4": {
             "Codificar\\CardValidation\\": "src/"
         }
-    }
+    },
+    "repositories": [
+        {
+          "type": "package",
+          "package": {
+            "name": "codificar/card-validation",
+            "version": "master",
+            "source": {
+              "url": "https://libs:ofImhksJ@git.codificar.com.br/laravel-libs/laravel-card-validation.git",
+              "type": "git",
+              "reference": "master"
+            }
+          }
+        }
+    ],  
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
 }
