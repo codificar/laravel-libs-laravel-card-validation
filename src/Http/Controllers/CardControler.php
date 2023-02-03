@@ -3,6 +3,8 @@
 namespace Codificar\Generic\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Codificar\Finance\Http\Requests\AddCardUserFormRequest;
+use Codificar\Finance\Http\Resources\AddCardUserResource;
 use Illuminate\Http\Request;
 
 
@@ -27,7 +29,14 @@ class GenericController extends Controller {
 		$enviroment = $this->getEnviroment();
 		return $this->newCreditCard($enviroment['holder'], $enviroment['type'], $request);
 	}
-
+	public function addCreditCardProvider(AddCardUserFormRequest $request) {
+		$provider = Provider::find($request->id);
+		return $this->newCreditCard($provider, 'provider', $request);
+	}
+	public function addCreditCardUser(AddCardUserFormRequest $request) {
+		$user = User::find($request->id);
+		return $this->newCreditCard($user, 'user', $request);
+	}
     /**
      * add the new cart to system
      * 
@@ -48,6 +57,33 @@ class GenericController extends Controller {
 		} else {
 			return response()->json(['message' => $return['message'],'success'=> false, 'type' => $return['type'], 'card' => $payment], 406);
 		}
+	}
+
+	private function getEnviroment() {
+		$type = Request::segment(1);
+		switch($type){
+			case Finance::TYPE_USER:
+				$id = Auth::guard("clients")->user()->id;
+				$holder = User::find($id);
+				$type = 'user';
+			break;
+			case Finance::TYPE_CORP:
+				$admin_id = LibModel::getGuardWebCorp();
+				$holder = AdminInstitution::getUserByAdminId($admin_id);
+				$id = $holder->id;
+				$type = 'corp';
+			break;
+			case Finance::TYPE_PROVIDER:
+				$id = \Auth::guard("providers")->user()->id;
+				$holder = Provider::find($id);
+				$type = 'provider';
+			break;
+		}
+		return array(
+			'type' => $type,
+			'id' => $id,
+			'holder' => $holder
+		);
 	}
 
 }
